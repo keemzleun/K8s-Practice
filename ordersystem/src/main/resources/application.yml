@@ -47,5 +47,5 @@ cloud:
       static: us-east-1
       auto: false
     s3:
-      bucket: my-fav-book
+      bucket: 
 

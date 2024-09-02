@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx-replicaset
+  namespace: jin
+spec:
+  replicas: 2
+  # 아래 요소는 replicaset이 관리할 피드를 선택하기 위한 이름
+  # template.metadata.labels의 이름과 일치해야 함
+  selector:
+    matchLabels:
+      app: my-nginx     # 이름 동일
+  template:
+  # 아래 lables.app 부분은 service의 selector 부분과 일치해야하고, 위의 matchLabels와도 일치해야 함
+    metadata:
+      labels:
+        app: my-nginx   # 이름 동일
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+          - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  namespace: jin
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30120
+  selector:
+    app: my-nginx
+
+# 지은님 키보드 쌤치고싶어요 키보드 좋다
+# 김지은으로 삼행시
+# 김! 지은님 우리 토껴서 보라매 가요
+# 지! 지은님 우리 회의 토끼고 영등포 무지 가요
+# 응! 응!
+
+# 대답해주셔서 감사합니다 개큰감동. . . .
+

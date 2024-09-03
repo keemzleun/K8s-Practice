@@ -48,14 +48,14 @@ jobs:
           kubectl rollout restart deployment member-deployment -n jin
       
 
-       - name: build and push docker order images to ecr
-          env:
-            REGISTRY: 346903264902.dkr.ecr.ap-northeast-2.amazonaws.com
-            REPOSITORY: jin-order
-          run: |
-            docker build -t $REGISTRY/$REPOSITORY:latest \
-            -f ./msa/order/Dockerfile ./msa/order
-            docker push $REGISTRY/$REPOSITORY:latest
+      - name: build and push docker order images to ecr
+        env:
+          REGISTRY: 346903264902.dkr.ecr.ap-northeast-2.amazonaws.com
+          REPOSITORY: jin-order
+        run: |
+          docker build -t $REGISTRY/$REPOSITORY:latest \
+          -f ./msa/order/Dockerfile ./msa/order
+          docker push $REGISTRY/$REPOSITORY:latest
 
       - name: eks kubectl apply
         run: |
@@ -63,7 +63,7 @@ jobs:
           kubectl rollout restart deployment order-deployment -n jin
       
 
-       - name: build and push docker product images to ecr
+      - name: build and push docker product images to ecr
         env:
           REGISTRY: 346903264902.dkr.ecr.ap-northeast-2.amazonaws.com
           REPOSITORY: jin-product

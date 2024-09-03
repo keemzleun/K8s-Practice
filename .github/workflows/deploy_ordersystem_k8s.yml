@@ -33,46 +33,4 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
 
-      - name: build and push docker member images to ecr
-        env:
-          REGISTRY: 346903264902.dkr.ecr.ap-northeast-2.amazonaws.com
-          REPOSITORY: jin-member
-        run: |
-          docker build -t $REGISTRY/$REPOSITORY:latest \
-          -f ./msa/member/Dockerfile ./msa/member
-          docker push $REGISTRY/$REPOSITORY:latest
-
-      - name: eks kubectl apply
-        run: |
-          kubectl apply -f ./msa/member/k8s/member_depl.yml  
-          kubectl rollout restart deployment member-deployment -n jin
       
-
-      - name: build and push docker order images to ecr
-        env:
-          REGISTRY: 346903264902.dkr.ecr.ap-northeast-2.amazonaws.com
-          REPOSITORY: jin-order
-        run: |
-          docker build -t $REGISTRY/$REPOSITORY:latest \
-          -f ./msa/order/Dockerfile ./msa/order
-          docker push $REGISTRY/$REPOSITORY:latest
-
-      - name: eks kubectl apply
-        run: |
-          kubectl apply -f ./msa/order/k8s/order_depl.yml  
-          kubectl rollout restart deployment order-deployment -n jin
-      
-
-      - name: build and push docker product images to ecr
-        env:
-          REGISTRY: 346903264902.dkr.ecr.ap-northeast-2.amazonaws.com
-          REPOSITORY: jin-product
-        run: |
-          docker build -t $REGISTRY/$REPOSITORY:latest \
-          -f ./msa/product/Dockerfile ./msa/product
-          docker push $REGISTRY/$REPOSITORY:latest
-
-      - name: eks kubectl apply
-        run: |
-          kubectl apply -f ./msa/product/k8s/product_depl.yml  
-          kubectl rollout restart deployment product-deployment -n jin

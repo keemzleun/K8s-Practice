@@ -98,6 +98,7 @@ spec:
   - host: server.keemzleun.shop
     http:
       paths:
+      
       - path: /product-service/(.*)
         pathType: Prefix
         backend:
